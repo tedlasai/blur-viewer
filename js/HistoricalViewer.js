@@ -9,7 +9,7 @@ class HistoricalViewer {
         
         this.cur_frame = 0;
         this.base_im = '0000';
-        this.method = 'pastfuture';
+        this.method = 'present';
         this.interval_id = null;
         this.anim_dir = 1;
 
@@ -23,13 +23,12 @@ class HistoricalViewer {
         this.mega_sam = document.getElementById(`${this.prefix}-megasam`);
         this.mega_sam_poses = document.getElementById(`${this.prefix}-megasam-poses`);
 
-        this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks];
+        this.video_elements = [this.ours_recon, this.ours_tracks];
 
         this.initSceneSelector();
         this.initSliderSync();
         this.isPlaying = false;
         this.toggle_play_pause();
-        this.loadVideos();
 
 
         //this.initialize_slider_sync();
@@ -112,10 +111,10 @@ class HistoricalViewer {
         const method = this.method;
         const ours_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
         const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
-        const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
-        const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
-        const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
-        const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
+        // const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
+        // const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
+        // const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
+        // const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
@@ -125,21 +124,21 @@ class HistoricalViewer {
         this.ours_tracks.load();
         this.ours_tracks.currentTime = 0;
 
-        this.motionetr_recon.src = motionetr_reconPath;
-        this.motionetr_recon.load();
-        this.motionetr_recon.currentTime = 0;
+    //     this.motionetr_recon.src = motionetr_reconPath;
+    //     this.motionetr_recon.load();
+    //     this.motionetr_recon.currentTime = 0;
 
-        this.motionetr_tracks.src = motionetr_tracksPath;
-        this.motionetr_tracks.load();
-        this.motionetr_tracks.currentTime = 0;
+    //     this.motionetr_tracks.src = motionetr_tracksPath;
+    //     this.motionetr_tracks.load();
+    //     this.motionetr_tracks.currentTime = 0;
 
-        this.jin_recon.src = jin_reconPath;
-        this.jin_recon.load();
-        this.jin_recon.currentTime = 0;
+    //     this.jin_recon.src = jin_reconPath;
+    //     this.jin_recon.load();
+    //     this.jin_recon.currentTime = 0;
 
-        this.jin_tracks.src = jin_tracksPath;
-        this.jin_tracks.load();
-        this.jin_tracks.currentTime = 0;
+    //     this.jin_tracks.src = jin_tracksPath;
+    //     this.jin_tracks.load();
+    //     this.jin_tracks.currentTime = 0;
     }
 
     toggle_play_pause() {
