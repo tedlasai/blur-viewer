@@ -27,6 +27,7 @@ class InTheWildViewer {
         this.initVideos();
         this.initSliderSync();
         //this.initialize_slider_sync();
+        this.sync_other_videos();
     }
 
     /* Scene selector from SimulatedViewer */
@@ -95,11 +96,24 @@ class InTheWildViewer {
     //     });
     // }
 
-  
+    /* Keep all videos in sync */
+    sync_other_videos() {
+        const master = this.video_elements[0];
+        const others = this.video_elements.slice(1);
+        master.addEventListener("timeupdate", () => {
+            if (!master.duration) return;
+            const time = master.currentTime;
+            others.forEach(video => {
+                if (Math.abs(video.currentTime - time) > 0.03) {
+                    video.currentTime = time;
+                }
+            });
+        });
+    }
 
     /* Update frame on slider change */
     change_frame(idx) {
-        //this.stop_anim();
+        this.stop_anim();
         this.cur_frame = parseInt(idx);
         const norm = this.cur_frame / (this.max_idx);
         console.log("Video duration: ", this.video_elements[0].duration);
@@ -174,25 +188,17 @@ class InTheWildViewer {
         this.jin_tracks.pause();
     }
 
+    /* Play/pause toggle */
     toggle_play_pause() {
-        const isPlaying = false;
-        
-        //this.change_frame(this.cur_frame+1);
-
-        console.log("Toggling play/pause", isPlaying);
-    
-        if (isPlaying) {
-            // stop advancing the slider
-            console.log("Stopping animation");
-            this.stop_anim();
-        } else {
-            // start cycling the slider frames
-            // interpret playback_speed as seconds per frame
-            const delayMs = 100;
-            this.cycle_frames(delayMs);
-        }
-    
-        // flip the play/pause button state
+        const isPlaying = this.video_elements.some(v => !v.paused);
+        this.video_elements.forEach(v => {
+            if (isPlaying) {
+                v.pause();
+            } else {
+                v.playbackRate = this.playback_speed;
+                //v.play();
+            }
+        });
         this.updatePlayButton(!isPlaying);
     }
 
@@ -222,11 +228,10 @@ class InTheWildViewer {
     next_frame() {
         if (this.cur_frame === this.max_idx - 1) this.anim_dir = -1;
         if (this.cur_frame === 0) this.anim_dir = 1;
-        console.log("Changing frame to: ", this.cur_frame + this.anim_dir);
         this.change_frame(this.cur_frame + this.anim_dir);
     }
     cycle_frames(delay = 200) {
-        console.log("In cycle_frames");
+        this.stop_anim();
         this.interval_id = setInterval(() => this.next_frame(), delay);
     }
     stop_anim() {

@@ -1,9 +1,9 @@
 
 class SimulatedViewer {
-	constructor(prefix, max_idx, n_scenes, playback_speed = 1) {
+	constructor() {
 		this.prefix = 'simulated';
-		this.max_idx = max_idx;
-		this.n_scenes = n_scenes;
+		this.max_idx = 9;
+		this.n_scenes = 8;
 		this.cur_frame = 0;
 		this.base_im = '0000';
 		this.method = 'present';
@@ -12,9 +12,9 @@ class SimulatedViewer {
 		this.anim_dir = 1;
 		this.current_delay = 200;
 
-		this.video_recon = document.getElementById(`${prefix}-ours`);
-		this.video_tracks = document.getElementById(`${prefix}-ours-tracks`);
-		this.input_img = document.getElementById(`${prefix}-input`);
+		this.video_recon = document.getElementById(`${this.prefix}-ours`);
+		this.video_tracks = document.getElementById(`${this.prefix}-ours-tracks`);
+		this.input_img = document.getElementById(`${this.prefix}-input`);
 
 		this.initSceneSelector();
 		this.initSliderSync();
