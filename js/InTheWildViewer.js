@@ -1,8 +1,8 @@
 class InTheWildViewer {
     constructor() {
         this.prefix = 'wild';
-        this.max_idx = 12;
-        this.n_scenes = 8;
+        this.max_idx = 16;
+        this.n_scenes = 11;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
@@ -20,14 +20,16 @@ class InTheWildViewer {
         this.jin_recon = document.getElementById(`${this.prefix}-jin`);
         this.jin_tracks = document.getElementById(`${this.prefix}-jin-tracks`);
         this.input_img = document.getElementById(`${this.prefix}-input`);
+        this.mega_sam = document.getElementById(`${this.prefix}-megasam`);
+        this.mega_sam_poses = document.getElementById(`${this.prefix}-megasam-poses`);
 
         this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks];
 
         this.initSceneSelector();
-        this.initVideos();
         this.initSliderSync();
         this.isPlaying = false;
         this.toggle_play_pause();
+
 
         //this.initialize_slider_sync();
     }
@@ -35,27 +37,28 @@ class InTheWildViewer {
     /* Scene selector from SimulatedViewer */
     initSceneSelector() {
         const selector = document.getElementById(`${this.prefix}-scene-selector`);
+        selector.innerHTML = ""; // Clear any previous content
+    
         for (let i = 0; i < this.n_scenes; i++) {
             const padded = i.toString().padStart(4, '0');
-            selector.innerHTML += `
-                <div onclick="${this.prefix}_viewer.change_scene('${padded}')">
-                    <img class="selectable" style="border-radius:1em; max-width: 7em"
-                         src="assets/${this.prefix}/icons/${padded}.png">
-                </div>`;
+            
+            const div = document.createElement("div");
+            div.style.margin = "0.5em";
+    
+            const img = document.createElement("img");
+            img.src = `assets/${this.prefix}/icons/${padded}.png`;
+            img.style.borderRadius = "1em";
+            img.style.maxWidth = "7em";
+            img.style.cursor = "pointer";
+    
+            img.onclick = () => this.change_scene(padded);
+    
+            div.appendChild(img);
+            selector.appendChild(div);
         }
     }
 
-    /* Video management from ComplexViewer */
-    initVideos() {
-        for (let i = 0; i < this.num_videos; i++) {
-            const video = document.getElementById(`${this.prefix}-output-${i}`);
-            if (video) {
-                video.pause();
-                video.currentTime = 0;
-                this.video_elements.push(video);
-            }
-        }
-    }
+
 
     /* Slider sync combining both versions */
     initSliderSync() {
@@ -67,7 +70,7 @@ class InTheWildViewer {
                 if (!this.ours_recon.duration) return;
                 const progress = this.ours_recon.currentTime / this.ours_recon.duration;
 
-                const newVal = Math.round(progress * (parseInt(slider.max) || (this.max_idx)));
+                const newVal = Math.round(progress * ((this.max_idx) || parseInt(slider.max) ));
                 if (parseInt(slider.value) !== newVal) {
                     slider.value = newVal;
                     this.cur_frame = newVal;
@@ -76,24 +79,6 @@ class InTheWildViewer {
             });
         });
     }
-
-    /* Legacy slider sync for other videos */
-    // initialize_slider_sync() {
-    //     const master = this.video_elements[0];
-    //     const slider = document.getElementById(`${this.prefix}_frame_control`);
-    //     if (!master || !slider) return;
-    //     master.addEventListener("timeupdate", () => {
-    //         if (!master.duration) return;
-    //         const progress = master.currentTime / master.duration;
-    //         const newVal = Math.round(progress * parseInt(slider.max));
-    //         slider.value = newVal;
-    //         this.cur_frame = newVal;
-    //         this.applyGlowEffect();
-    //     });
-    // }
-
-  
-
     /* Update frame on slider change */
     change_frame(idx) {
         //this.stop_anim();
@@ -134,32 +119,26 @@ class InTheWildViewer {
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
         this.ours_recon.currentTime = 0;
-        this.ours_recon.pause();
 
         this.ours_tracks.src = ours_tracksPath;
         this.ours_tracks.load();
         this.ours_tracks.currentTime = 0;
-        this.ours_tracks.pause();
 
         this.motionetr_recon.src = motionetr_reconPath;
         this.motionetr_recon.load();
         this.motionetr_recon.currentTime = 0;
-        this.motionetr_recon.pause();
 
         this.motionetr_tracks.src = motionetr_tracksPath;
         this.motionetr_tracks.load();
         this.motionetr_tracks.currentTime = 0;
-        this.motionetr_tracks.pause();
 
         this.jin_recon.src = jin_reconPath;
         this.jin_recon.load();
         this.jin_recon.currentTime = 0;
-        this.jin_recon.pause();
 
         this.jin_tracks.src = jin_tracksPath;
         this.jin_tracks.load();
         this.jin_tracks.currentTime = 0;
-        this.jin_tracks.pause();
     }
 
     toggle_play_pause() {
@@ -175,7 +154,6 @@ class InTheWildViewer {
             const delayMs = 100;
             this.cycle_frames(delayMs);
         }
-        console.log("toggle_play_pause", this.isPlaying);
     
 
 
@@ -188,7 +166,6 @@ class InTheWildViewer {
         const btn = document.getElementById(`${this.prefix}-play-pause-btn`);
         const icon = document.getElementById(`${this.prefix}-play-pause-icon`);
         const label = btn.querySelector("span:last-child");
-        console.log("updatePlayButton", this.isPlaying);
         if (this.isPlaying) { //show pause button while playing
             icon.className = "fas fa-pause";
             label.textContent = "Pause";
@@ -201,7 +178,7 @@ class InTheWildViewer {
 
     /* Animation controls */
     next_frame() {
-        if (this.cur_frame === this.max_idx - 1) this.anim_dir = -1;
+        if (this.cur_frame >= this.max_idx) this.anim_dir = -1;
         if (this.cur_frame === 0) this.anim_dir = 1;
         this.change_frame(this.cur_frame + this.anim_dir);
     }

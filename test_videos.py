@@ -31,10 +31,7 @@ def video_to_npy(video_path, resize_to=None, max_frames=None):
     return frames_np
 
 
-one_video = video_to_npy("/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/results/selected/in-the-wild/videos/165773_1x_Ours.mp4")
-full_video = video_to_npy("/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/results/selected/full/videos/Adobe240-lower_fps_frames-720p_240fps_4-frame_00093_in0085_ie0101_os0077_oe0109_ctr0093_win0016_fps0120_2x.png_Ours.mp4")
-gopro_video = video_to_npy("/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/results/selected/gopro/videos/GOPR0384_11_00_Jin.mp4")
+gopro_video = video_to_npy("/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/results/selected/in-the-wild/videos/14810348233_2dda2cb3a7_o_1x_Jin.mp4")
 
-print(one_video.shape)
-print(full_video.shape)
+
 print(gopro_video.shape)

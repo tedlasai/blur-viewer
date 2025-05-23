@@ -8,5 +8,6 @@ let simulated_viewer = null;
 document.addEventListener("DOMContentLoaded", () => {
 	simulated_viewer = new SimulatedViewer();
 	wild_viewer = new InTheWildViewer();
+	historical_viewer = new HistoricalViewer();
 });
 

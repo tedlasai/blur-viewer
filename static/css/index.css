@@ -179,7 +179,7 @@ body {
 .slider-ticks span {
   width: 1px;
   height: 10px; /* slightly taller for visibility */
-  background-color: #4a90e2;
+  background-color: black;
 }
 
 .frame-slider {
@@ -188,7 +188,7 @@ body {
   height: 10px;
   border-radius: 4px;
   outline: none;
-  background: #d0e6ff;
+  background: #e6ffd0;;
   box-sizing: border-box; /* Ensure no overflow */
 }
 
@@ -237,11 +237,11 @@ body {
 }
 
 .color-box.present {
-  background-color: #d0e6ff;
+  background-color: #e6ffd0;
 }
 
 .color-box.future {
-  background-color: #e6ffd0;
+  background-color: #d0e6ff;
 }
 
 [id$='-legend-past'],
