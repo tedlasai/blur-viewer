@@ -9,5 +9,7 @@ document.addEventListener("DOMContentLoaded", () => {
 	simulated_viewer = new SimulatedViewer();
 	wild_viewer = new InTheWildViewer();
 	historical_viewer = new HistoricalViewer();
+	gopro_viewer = new GoProViewer();
+	baist_viwer = new BaistViewer();
 });
 

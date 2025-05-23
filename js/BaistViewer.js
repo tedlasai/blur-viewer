@@ -1,8 +1,8 @@
-class InTheWildViewer {
+class BaistViewer {
     constructor() {
-        this.prefix = 'wild';
-        this.max_idx = 16;
-        this.n_scenes = 45;
+        this.prefix = 'baist';
+        this.max_idx = 7;
+        this.n_scenes = 11;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
@@ -15,15 +15,13 @@ class InTheWildViewer {
 
         this.ours_recon = document.getElementById(`${this.prefix}-ours`);
         this.ours_tracks = document.getElementById(`${this.prefix}-ours-tracks`);
-        this.motionetr_recon = document.getElementById(`${this.prefix}-motionetr`);
-        this.motionetr_tracks = document.getElementById(`${this.prefix}-motionetr-tracks`);
-        this.jin_recon = document.getElementById(`${this.prefix}-jin`);
-        this.jin_tracks = document.getElementById(`${this.prefix}-jin-tracks`);
+        this.anim_recon = document.getElementById(`${this.prefix}-anim`);
+        this.anim_tracks = document.getElementById(`${this.prefix}-anim-tracks`);
         this.input_img = document.getElementById(`${this.prefix}-input`);
         this.mega_sam = document.getElementById(`${this.prefix}-megasam`);
         this.mega_sam_poses = document.getElementById(`${this.prefix}-megasam-poses`);
 
-        this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks];
+        this.video_elements = [this.ours_recon, this.ours_tracks, this.anim_recon, this.anim_tracks];
 
         this.initSceneSelector();
         this.initSliderSync();
@@ -111,10 +109,8 @@ class InTheWildViewer {
         const method = this.method;
         const ours_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
         const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
-        const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
-        const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
-        const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
-        const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
+        const anim_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/anim.mp4`;
+        const anim_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/anim.mp4`;
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
@@ -124,21 +120,14 @@ class InTheWildViewer {
         this.ours_tracks.load();
         this.ours_tracks.currentTime = 0;
 
-        this.motionetr_recon.src = motionetr_reconPath;
-        this.motionetr_recon.load();
-        this.motionetr_recon.currentTime = 0;
+        this.anim_recon.src = anim_reconPath;
+        this.anim_recon.load();
+        this.anim_recon.currentTime = 0;
 
-        this.motionetr_tracks.src = motionetr_tracksPath;
-        this.motionetr_tracks.load();
-        this.motionetr_tracks.currentTime = 0;
+        this.anim_tracks.src = anim_tracksPath;
+        this.anim_tracks.load();
+        this.anim_tracks.currentTime = 0;
 
-        this.jin_recon.src = jin_reconPath;
-        this.jin_recon.load();
-        this.jin_recon.currentTime = 0;
-
-        this.jin_tracks.src = jin_tracksPath;
-        this.jin_tracks.load();
-        this.jin_tracks.currentTime = 0;
     }
 
     toggle_play_pause() {

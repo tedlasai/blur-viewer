@@ -9,7 +9,7 @@ class HistoricalViewer {
         
         this.cur_frame = 0;
         this.base_im = '0000';
-        this.method = 'present';
+        this.method = 'pastfuture';
         this.interval_id = null;
         this.anim_dir = 1;
 
@@ -29,6 +29,7 @@ class HistoricalViewer {
         this.initSliderSync();
         this.isPlaying = false;
         this.toggle_play_pause();
+        this.set_method(this.method);
 
 
         //this.initialize_slider_sync();

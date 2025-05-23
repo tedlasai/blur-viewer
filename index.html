@@ -43,6 +43,8 @@
   <script src="js/SimulatedViewer.js"></script>
 <script src="js/InTheWildViewer.js"></script>
 <script src="js/HistoricalViewer.js"></script>
+<script src="js/GoProViewer.js"></script>
+<script src="js/BaistViewer.js"></script>
 <script src="js/main.js"></script>
 
 
@@ -219,7 +221,7 @@
   <div class="hero-body">
   <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
     <br/>
-    <h2 class="title">In-the-historical Results</h2>
+    <h2 class="title">Historical Results</h2>
     <div class="content has-text-justified">
       <p class="content has-text-justified">
         A paragraph describing the results. We show recovered videos from motion-blurred images. Should have scene selection and also option to select between different modes (past, present, future, etc.)
@@ -455,24 +457,267 @@
     </div> <!-- section container -->
   </section>
   
-  <!-- BASELINE COMPARISONS -->
-  <section class="hero teaser">
-    <div class="hero-body">
-    <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
-      <br/>
-      <h2 class="title">Baseline Comparisons</h2>
-      <div class="content has-text-justified">
-        <p class="content has-text-justified">
-          Comparisons against various baselines. Our results are better!
-        </p>
-      </div>
-        <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
-          <h5 style="text-align:left;">Scene Selection</h5>
-          <div id='simulated-scene-selector_data' style="display:flex; flex-flow: row wrap; justify-content: space-evenly;">
-          </div>
-        </div>
-  </section>
 
-    
+
+<section class="hero teaser">
+  <div class="hero-body">
+  <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
+    <br/>
+    <h2 class="title">GoPro Results</h2>
+    <div class="content has-text-justified">
+      <p class="content has-text-justified">
+        A paragraph describing the results. We show recovered videos from motion-blurred images. Should have scene selection and also option to select between different modes (past, present, future, etc.)
+      </p>
+    </div>
+      <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
+        <h5 style="text-align:left;">Scene Selection</h5>
+        <div id='gopro-scene-selector' style="display:flex; flex-flow: row wrap; justify-content: flex-start;">
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <!-- <h3 class="subtitle">Video Reconstruction</h3> -->
+      <!-- Blurry image centered -->
+      <div class="has-text-centered" style="margin-bottom: 1em;">
+        <img id="gopro-input" src="assets/simulated/blurry/0000_present.png" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
+        <h5 class="subtitle" style="font-size: 0.9em;">blurry image</h5>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; text-align: center;">
+        <thead>
+          <tr>
+            <th></th> <!-- Empty corner cell -->
+            <th style="font-size: 0.9em; padding: 0.5em;">recovered video</th>
+            <th style="font-size: 0.9em; padding: 0.5em;">motion tracks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th style="font-size: 1em; padding: 0.5em; text-align: center; vertical-align: middle;">Ours</th>
+            <td>
+              <video id="gopro-ours" src="assets/gopro/videos/0000/present/Ours.mp4" muted 
+                     style="width: 95%; border-radius: 1em;"></video>
+            </td>
+            <td>
+              <video id="gopro-ours-tracks" src="assets/gopro/tracks/0000/present/Ours.mp4" muted
+                     style="width: 95%; border-radius: 1em;"></video>
+            </td>
+          </tr>
+          <tr class="hide-on-pastfuture">
+            <th style="font-size: 1em; padding: 0.5em; text-align: center; vertical-align: middle;">MotionETR</th>
+            <td>
+              <video id="gopro-motionetr" src="assets/gopro/videos/0000/present/MotionETR.mp4" muted 
+                     style="width: 95%; border-radius: 1em;;"></video>
+            </td>
+            <td>
+              <video id="gopro-motionetr-tracks" src="assets/gopro/tracks/0000/present/MotionETR.mp4" muted
+                     style="width: 95%; border-radius: 1em;;"></video>
+            </td>
+          </tr>
+          <tr class="hide-on-pastfuture">
+            <th style="font-size: 1em; padding: 0.5em; text-align: center; vertical-align: middle;">Jin et al.</th>
+            <td>
+              <video id="gopro-jin" src="assets/gopro/videos/0000/present/Jin.mp4" muted 
+                     style="width: 95%; border-radius: 1em;;"></video>
+            </td>
+            <td>
+              <video id="gopro-jin-tracks" src="assets/gopro/tracks/0000/present/Jin.mp4" muted 
+                     style="width: 95%; border-radius: 1em;;"></video>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+      <div class="container is-max-desktop has-text-centered" style="padding: 1em 1.5em; border-radius: 1em; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;">
+        <div class="is-flex is-align-items-center is-justify-content-space-between" style="margin-bottom: 0.75em;">
+          <h5 style="font-size: 1.1em; margin: 0;">Frame Control</h5>
+          <button id="gopro-play-pause-btn" class="button is-info" onclick="gopro_viewer.toggle_play_pause()">
+            <span class="icon"><i id="gopro-play-pause-icon" class="fas fa-play"></i></span>
+            <span style="font-size: 1rem; font-weight: 500;">Play</span>
+          </button>
+        </div>
+      
+        <div class="slider-container">
+          <input
+            type="range"
+            min="0"
+            max="7"
+            step="1"
+            value="0"
+            id="gopro_frame_control"
+            class="frame-slider"
+            oninput="gopro_viewer.change_frame(this.value);"
+          />
+          <div class="slider-ticks">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span>
+
+          </div>
+          <div class="slider-legend">
+            <div class="legend-item" id="gopro-legend-past"><span class="color-box past"></span>Past Predictions</div>
+            <div class="legend-item" id="gopro-legend-present"><span class="color-box present"></span>Present (within exposure time)</div>
+            <div class="legend-item" id="gopro-legend-future"><span class="color-box future"></span>Future Predictions</div>
+          </div>
+        </div> 
+      </div> <!-- container is-max-desktop -->
+
+      <!-- Additional Comparison Table -->
+      <!-- <table style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 1em;">
+        <thead>
+          <tr>
+            <th></th>
+            <th style="font-size: 0.9em; padding: 0.5em;">3D reconstruction</th>
+            <th></th>
+          </tr>
+        </thead> -->
+        <!-- <tbody>
+          <tr>
+            <th style="font-size: 0.9em; padding: 0.5em; text-align: center; vertical-align: middle;">MegaSAM on Ours</th>
+            <td style="width: 70%;">
+              <video id="gopro-megasam" src="assets/gopro/videos/cam_motion.mp4" muted autoplay loop 
+                     style="width: 95%; border-radius: 1em;"></video>
+            </td>
+            <td style="width: 30%; vertical-align: middle;">
+              <div style="font-size: 0.9em; font-weight: bold; margin-bottom: 0.5em;">camera poses</div>
+              <video id="gopro-megasam-poses" src="assets/gopro/videos/poses.mp4" muted autoplay loop
+              style="width: 95%; border-radius: 1em;"></video>
+            </td>
+          </tr>
+        </tbody> -->
+      </table>
+
+    </div> <!-- hero-body -->
+  </div> <!-- section container -->
+</section>
+
+<br/>
+
+
+<section class="hero teaser">
+  <div class="hero-body">
+  <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
+    <br/>
+    <h2 class="title">baist Results</h2>
+    <div class="content has-text-justified">
+      <p class="content has-text-justified">
+        A paragraph describing the results. We show recovered videos from motion-blurred images. Should have scene selection and also option to select between different modes (past, present, future, etc.)
+      </p>
+    </div>
+      <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
+        <h5 style="text-align:left;">Scene Selection</h5>
+        <div id='baist-scene-selector' style="display:flex; flex-flow: row wrap; justify-content: flex-start;">
+        </div>
+      </div>
+      <br/>
+      <br/>
+      <!-- <h3 class="subtitle">Video Reconstruction</h3> -->
+      <!-- Blurry image centered -->
+      <div class="has-text-centered" style="margin-bottom: 1em;">
+        <img id="baist-input" src="assets/simulated/blurry/0000_present.png" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
+        <h5 class="subtitle" style="font-size: 0.9em;">blurry image</h5>
+      </div>
+
+      <table style="width: 100%; border-collapse: collapse; text-align: center;">
+        <thead>
+          <tr>
+            <th></th> <!-- Empty corner cell -->
+            <th style="font-size: 0.9em; padding: 0.5em;">recovered video</th>
+            <th style="font-size: 0.9em; padding: 0.5em;">motion tracks</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <th style="font-size: 1em; padding: 0.5em; text-align: center; vertical-align: middle;">Ours</th>
+            <td>
+              <video id="baist-ours" src="assets/baist/videos/0000/present/Ours.mp4" muted 
+                     style="width: 95%; border-radius: 1em;"></video>
+            </td>
+            <td>
+              <video id="baist-ours-tracks" src="assets/baist/tracks/0000/present/Ours.mp4" muted
+                     style="width: 95%; border-radius: 1em;"></video>
+            </td>
+          </tr>
+          <tr class="hide-on-pastfuture">
+            <th style="font-size: 1em; padding: 0.5em; text-align: center; vertical-align: middle;">anim</th>
+            <td>
+              <video id="baist-anim" src="assets/baist/videos/0000/present/anim.mp4" muted 
+                     style="width: 95%; border-radius: 1em;;"></video>
+            </td>
+            <td>
+              <video id="baist-anim-tracks" src="assets/baist/tracks/0000/present/anim.mp4" muted
+                     style="width: 95%; border-radius: 1em;;"></video>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+      
+
+      <div class="container is-max-desktop has-text-centered" style="padding: 1em 1.5em; border-radius: 1em; box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 10px;">
+        <div class="is-flex is-align-items-center is-justify-content-space-between" style="margin-bottom: 0.75em;">
+          <h5 style="font-size: 1.1em; margin: 0;">Frame Control</h5>
+          <button id="baist-play-pause-btn" class="button is-info" onclick="baist_viewer.toggle_play_pause()">
+            <span class="icon"><i id="baist-play-pause-icon" class="fas fa-play"></i></span>
+            <span style="font-size: 1rem; font-weight: 500;">Play</span>
+          </button>
+        </div>
+      
+        <div class="slider-container">
+          <input
+            type="range"
+            min="0"
+            max="7"
+            step="1"
+            value="0"
+            id="baist_frame_control"
+            class="frame-slider"
+            oninput="baist_viewer.change_frame(this.value);"
+          />
+          <div class="slider-ticks">
+            <span></span><span></span><span></span><span></span>
+            <span></span><span></span><span></span>
+            <span></span>
+
+          </div>
+          <div class="slider-legend">
+            <div class="legend-item" id="baist-legend-past"><span class="color-box past"></span>Past Predictions</div>
+            <div class="legend-item" id="baist-legend-present"><span class="color-box present"></span>Present (within exposure time)</div>
+            <div class="legend-item" id="baist-legend-future"><span class="color-box future"></span>Future Predictions</div>
+          </div>
+        </div> 
+      </div> <!-- container is-max-desktop -->
+
+      <!-- Additional Comparison Table -->
+      <!-- <table style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 1em;">
+        <thead>
+          <tr>
+            <th></th>
+            <th style="font-size: 0.9em; padding: 0.5em;">3D reconstruction</th>
+            <th></th>
+          </tr>
+        </thead> -->
+        <!-- <tbody>
+          <tr>
+            <th style="font-size: 0.9em; padding: 0.5em; text-align: center; vertical-align: middle;">MegaSAM on Ours</th>
+            <td style="width: 70%;">
+              <video id="baist-megasam" src="assets/baist/videos/cam_motion.mp4" muted autoplay loop 
+                     style="width: 95%; border-radius: 1em;"></video>
+            </td>
+            <td style="width: 30%; vertical-align: middle;">
+              <div style="font-size: 0.9em; font-weight: bold; margin-bottom: 0.5em;">camera poses</div>
+              <video id="baist-megasam-poses" src="assets/baist/videos/poses.mp4" muted autoplay loop
+              style="width: 95%; border-radius: 1em;"></video>
+            </td>
+          </tr>
+        </tbody> -->
+      </table>
+
+    </div> <!-- hero-body -->
+  </div> <!-- section container -->
+</section>
+
+<br/>
+  
   </body>
   </html>

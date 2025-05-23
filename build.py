@@ -10,5 +10,6 @@ with open("index.html", "w") as out:
     out.write(inline("components/inthewild.html"))
     out.write(inline("components/historical.html"))
     out.write(inline("components/simulated.html"))
-    out.write(inline("components/baseline.html"))
+    out.write(inline("components/gopro.html"))
+    out.write(inline("components/baist.html"))
     out.write(inline("components/ending.html"))

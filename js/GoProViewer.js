@@ -1,8 +1,8 @@
-class InTheWildViewer {
+class GoProViewer {
     constructor() {
-        this.prefix = 'wild';
-        this.max_idx = 16;
-        this.n_scenes = 45;
+        this.prefix = 'gopro';
+        this.max_idx = 7;
+        this.n_scenes = 11;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
