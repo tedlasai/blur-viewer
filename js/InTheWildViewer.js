@@ -26,6 +26,9 @@ class InTheWildViewer {
         this.initSceneSelector();
         this.initVideos();
         this.initSliderSync();
+        this.isPlaying = false;
+        this.toggle_play_pause();
+
         //this.initialize_slider_sync();
     }
 
@@ -62,15 +65,9 @@ class InTheWildViewer {
         this.ours_recon.addEventListener('loadedmetadata', () => {
             this.ours_recon.addEventListener('timeupdate', () => {
                 if (!this.ours_recon.duration) return;
-                console.log("Current time: ", this.ours_recon.currentTime);
-                console.log("Duration: ", this.ours_recon.duration);
                 const progress = this.ours_recon.currentTime / this.ours_recon.duration;
 
                 const newVal = Math.round(progress * (parseInt(slider.max) || (this.max_idx)));
-                console.log("Intermediate new val: ", progress * (parseInt(slider.max) || (this.max_idx)));
-
-                console.log("Slider value changed to: ", newVal);
-                console.log("Current slider value: ", slider.value);
                 if (parseInt(slider.value) !== newVal) {
                     slider.value = newVal;
                     this.cur_frame = newVal;
@@ -102,20 +99,14 @@ class InTheWildViewer {
         //this.stop_anim();
         this.cur_frame = parseInt(idx);
         const norm = this.cur_frame / (this.max_idx);
-        console.log("Video duration: ", this.video_elements[0].duration);
-        console.log("this.cur_frame: ", this.cur_frame);
-        console.log("norm: ", norm);
         this.video_elements.forEach(video => {
-            console.log("Video duration: ", video.duration);
             if (video && video.duration) {
                 video.currentTime = norm * video.duration;
-                console.log("Video currentTime: ", video.currentTime);
 
             }
 
         });
         this.applyGlowEffect();
-        this.resetPlayButton();
     }
 
     /* Scene change handler */
@@ -139,9 +130,6 @@ class InTheWildViewer {
         const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
         const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
         const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
-
-
-
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
@@ -175,15 +163,11 @@ class InTheWildViewer {
     }
 
     toggle_play_pause() {
-        const isPlaying = false;
-        
-        //this.change_frame(this.cur_frame+1);
+        this.isPlaying = !this.isPlaying;
 
-        console.log("Toggling play/pause", isPlaying);
-    
-        if (isPlaying) {
+        //this.change_frame(this.cur_frame+1);
+        if (! this.isPlaying) {
             // stop advancing the slider
-            console.log("Stopping animation");
             this.stop_anim();
         } else {
             // start cycling the slider frames
@@ -191,17 +175,21 @@ class InTheWildViewer {
             const delayMs = 100;
             this.cycle_frames(delayMs);
         }
+        console.log("toggle_play_pause", this.isPlaying);
     
+
+
         // flip the play/pause button state
-        this.updatePlayButton(!isPlaying);
+        this.updatePlayButton();
     }
 
     /* Update UI play button */
-    updatePlayButton(isPlaying) {
+    updatePlayButton() {
         const btn = document.getElementById(`${this.prefix}-play-pause-btn`);
         const icon = document.getElementById(`${this.prefix}-play-pause-icon`);
         const label = btn.querySelector("span:last-child");
-        if (isPlaying) {
+        console.log("updatePlayButton", this.isPlaying);
+        if (this.isPlaying) { //show pause button while playing
             icon.className = "fas fa-pause";
             label.textContent = "Pause";
         } else {
@@ -210,23 +198,14 @@ class InTheWildViewer {
         }
     }
 
-    /* Reset play button to initial state */
-    resetPlayButton() {
-        const icon = document.getElementById(`${this.prefix}-play-pause-icon`);
-        const label = document.getElementById(`${this.prefix}-play-pause-btn`).querySelector("span:last-child");
-        icon.className = "fas fa-play";
-        label.textContent = "Play";
-    }
 
     /* Animation controls */
     next_frame() {
         if (this.cur_frame === this.max_idx - 1) this.anim_dir = -1;
         if (this.cur_frame === 0) this.anim_dir = 1;
-        console.log("Changing frame to: ", this.cur_frame + this.anim_dir);
         this.change_frame(this.cur_frame + this.anim_dir);
     }
     cycle_frames(delay = 200) {
-        console.log("In cycle_frames");
         this.interval_id = setInterval(() => this.next_frame(), delay);
     }
     stop_anim() {
