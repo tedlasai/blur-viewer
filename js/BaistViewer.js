@@ -2,7 +2,7 @@ class BaistViewer {
     constructor() {
         this.prefix = 'baist';
         this.max_idx = 7;
-        this.n_scenes = 11;
+        this.n_scenes = 8;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;

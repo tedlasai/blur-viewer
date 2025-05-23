@@ -15,6 +15,7 @@ class SimulatedViewer {
 
         this.ours_recon = document.getElementById(`${this.prefix}-ours`);
         this.ours_tracks = document.getElementById(`${this.prefix}-ours-tracks`);
+        this.input_img = document.getElementById(`${this.prefix}-input`);
 
         this.video_elements = [this.ours_recon, this.ours_tracks] 
 
@@ -91,7 +92,10 @@ class SimulatedViewer {
     change_scene(scene_id) {
         this.base_im = scene_id;
         this.cur_frame = 0;
+        console.log("Changing scene to: " + scene_id);
+        console.log('this.input_img: ' + this.input_img);
         if (this.input_img) {
+            console.log(`assets/${this.prefix}/blurry/${scene_id}_${this.method}.png`);
             this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_${this.method}.png`;
         }
         this.loadVideos();

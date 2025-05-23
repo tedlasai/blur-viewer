@@ -2,7 +2,7 @@ class GoProViewer {
     constructor() {
         this.prefix = 'gopro';
         this.max_idx = 7;
-        this.n_scenes = 11;
+        this.n_scenes = 9;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
