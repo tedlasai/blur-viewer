@@ -80,8 +80,8 @@ class LimitationsViewer {
             });
         });
     }
-    /* Update frame on slider change */
-    change_frame(idx) {
+    /* Update frame on slider  */
+    _frame(idx) {
         //this.stop_anim();
         this.cur_frame = parseInt(idx);
         const norm = this.cur_frame / (this.max_idx);
@@ -100,6 +100,7 @@ class LimitationsViewer {
         this.base_im = scene_id;
         this.cur_frame = 0;
         if (this.input_img) {
+            console.log("Changing scene to: " + scene_id);
             this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_present.png`;
         }
         this.loadVideos();
@@ -117,7 +118,7 @@ class LimitationsViewer {
         const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
         const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
         const method_not_supported_path = `assets/extra_stuff/method_not_supported.mp4`;
-        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/${method}/Ours.mp4`;
+        //const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/${method}/Ours.mp4`;
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
@@ -127,9 +128,9 @@ class LimitationsViewer {
         this.ours_tracks.load();
         this.ours_tracks.currentTime = 0;
 
-        this.mega_sam.src = mega_sam_path;
-        this.mega_sam.load();
-        this.mega_sam.currentTime = 0;
+        // this.mega_sam.src = mega_sam_path;
+        // this.mega_sam.load();
+        // this.mega_sam.currentTime = 0;
         
         if (this.method === 'pastfuture') {
             this.motionetr_recon.src = method_not_supported_path;
@@ -171,7 +172,7 @@ class LimitationsViewer {
     toggle_play_pause() {
         this.isPlaying = !this.isPlaying;
 
-        //this.change_frame(this.cur_frame+1);
+        //this._frame(this.cur_frame+1);
         if (! this.isPlaying) {
             // stop advancing the slider
             this.stop_anim();
@@ -207,7 +208,7 @@ class LimitationsViewer {
     next_frame() {
         if (this.cur_frame >= this.max_idx) this.anim_dir = -1;
         if (this.cur_frame === 0) this.anim_dir = 1;
-        this.change_frame(this.cur_frame + this.anim_dir);
+        this._frame(this.cur_frame + this.anim_dir);
     }
     cycle_frames(delay = 200) {
         this.interval_id = setInterval(() => this.next_frame(), delay);
@@ -236,9 +237,6 @@ class LimitationsViewer {
     set_method(name) {
         this.method = name;
         this.loadVideos();
-        if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${this.base_im}_${name}.png`;
-        }
         document.querySelectorAll(`#${this.prefix}-method-toggle button`).forEach(btn => {
             btn.classList.toggle("is-info", btn.dataset.method === name);
             btn.classList.toggle("is-light", btn.dataset.method !== name);
@@ -249,6 +247,6 @@ class LimitationsViewer {
             const el = document.getElementById(`${this.prefix}-legend-${region}`);
             if (el) el.style.display = name === "pastfuture" ? "inline-flex" : "none";
         });
-        this.change_frame(this.cur_frame);
+        this._frame(this.cur_frame);
     }
 }

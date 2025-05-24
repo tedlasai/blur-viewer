@@ -117,7 +117,7 @@ class InTheWildViewer {
         const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
         const method_not_supported_path = `assets/extra_stuff/method_not_supported.mp4`;
         const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam is only available for pastfuture
-
+        const mega_sam_poses_path = `assets/${this.prefix}/megasam_poses/${scene}/pastfuture/Ours.mp4`; // mega sam poses is only available for pastfuture
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
         this.ours_recon.currentTime = 0;
@@ -129,6 +129,10 @@ class InTheWildViewer {
         this.mega_sam.src = mega_sam_path;
         this.mega_sam.load();
         this.mega_sam.currentTime = 0;
+
+        this.mega_sam_poses.src = mega_sam_poses_path;
+        this.mega_sam_poses.load();
+        this.mega_sam_poses.currentTime = 0;
         
         if (this.method === 'pastfuture') {
             this.motionetr_recon.src = method_not_supported_path;
@@ -235,9 +239,6 @@ class InTheWildViewer {
     set_method(name) {
         this.method = name;
         this.loadVideos();
-        if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${this.base_im}_${name}.png`;
-        }
         document.querySelectorAll(`#${this.prefix}-method-toggle button`).forEach(btn => {
             btn.classList.toggle("is-info", btn.dataset.method === name);
             btn.classList.toggle("is-light", btn.dataset.method !== name);

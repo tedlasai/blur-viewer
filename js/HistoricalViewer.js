@@ -100,7 +100,7 @@ class HistoricalViewer {
         this.base_im = scene_id;
         this.cur_frame = 0;
         if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_${this.method}.png`;
+            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_present.png`;//blurry image is the same for present and pastfuture
         }
         this.loadVideos();
         this.change_frame(0);
@@ -113,6 +113,7 @@ class HistoricalViewer {
         const ours_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
         const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
         const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam path is only for pastfuture
+        const mega_sam_poses_path = `assets/${this.prefix}/megasam_poses/${scene}/pastfuture/Ours.mp4`; // mega sam path is only for pastfuture
         // const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
         // const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
         // const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
@@ -129,6 +130,10 @@ class HistoricalViewer {
         this.mega_sam.src = mega_sam_path;
         this.mega_sam.load();
         this.mega_sam.currentTime = 0;
+
+        this.mega_sam_poses.src = mega_sam_poses_path;
+        this.mega_sam_poses.load();
+        this.mega_sam_poses.currentTime = 0;
 
     //     this.motionetr_recon.src = motionetr_reconPath;
     //     this.motionetr_recon.load();
@@ -215,9 +220,6 @@ class HistoricalViewer {
     set_method(name) {
         this.method = name;
         this.loadVideos();
-        if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${this.base_im}_present.png`;
-        }
         document.querySelectorAll(`#${this.prefix}-method-toggle button`).forEach(btn => {
             btn.classList.toggle("is-info", btn.dataset.method === name);
             btn.classList.toggle("is-light", btn.dataset.method !== name);

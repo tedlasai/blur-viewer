@@ -32,8 +32,8 @@ output_root = os.path.join(base_dir, "..")
 
 limitations = [0, 2, 8]
 historical = [36, 39, 43, 42, 41, 27, 29, 30,33]
-special_scenes = [44, 12, 10, 24, 40, 16, 21, 35, 28]
-megasam_scenes = [36, 39, 43, 42, 41, 27, 29, 30, 33, 44, 12, 10, 24, 40, 16, 21, 35, 28]
+special_scenes = [44, 12, 24, 40, 16, 21, 35, 28, 10]
+megasam_scenes = [36, 39, 43, 42, 41, 27, 29, 30, 33, 44, 12, 24, 40, 16, 21, 35, 28]
 all_scenes = special_scenes.copy()
 # add any numbers between 0 and 46 that are not in limitations or historical to all_scenes
 for i in range(45):
@@ -97,14 +97,19 @@ for group_name, indices in group_dict.items():
 
         
         src_megasam = os.path.join(base_dir, "megasam_ds", old_str)
+        src_megasam_poses = os.path.join(base_dir, "megasam_poses_rotated", old_str) #use rotated poses
         dst_megasam = os.path.join(group_out, "megasam", new_str)
+        dst_megasam_poses = os.path.join(group_out, "megasam_poses", new_str)
         os.makedirs(dst_megasam, exist_ok=True)
 
-        if old_idx in special_scenes or old_idx in historical:
+        if old_idx in megasam_scenes:
             print(f"Processing directory: {src_megasam}")
             #copy_all_subfolders(os.path.join(src_megasam, "pastfuture"), os.path.join(dst_megasam, "pastfuture"))
             os.makedirs(os.path.join(dst_megasam, "pastfuture"), exist_ok=True)
+            os.makedirs(os.path.join(dst_megasam_poses, "pastfuture"), exist_ok=True)
             shutil.copy(os.path.join(src_megasam, "pastfuture", "Ours.mp4"), os.path.join(dst_megasam, "pastfuture", "Ours.mp4"))
+            if (os.path.exists(os.path.join(src_megasam_poses, "pastfuture", "Ours.mp4"))):
+                shutil.copy(os.path.join(src_megasam_poses, "pastfuture", "Ours.mp4"), os.path.join(dst_megasam_poses, "pastfuture", "Ours.mp4"))
         else:
             os.makedirs(os.path.join(dst_megasam, "pastfuture"), exist_ok=True)
             shutil.copy("/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/webpage-sai/rearrange_assets/nomegasam.mp4", os.path.join(dst_megasam, "pastfuture/Ours.mp4"))
