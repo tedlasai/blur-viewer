@@ -4,9 +4,9 @@ from PIL import Image, ImageDraw, ImageFont
 
 # Video parameters
 width, height = 640, 360
-text = "MegaSAM did not converge."
+text = "Omitted results due to file size constraints."
 num_frames = 16
-output_path = "assets/extra_stuff/megasam_not_converged.mp4"
+output_path = "assets/extra_stuff/nomegasam.mp4"
 fps = 5
 
 # Create a white background image with PIL
@@ -15,16 +15,16 @@ draw = ImageDraw.Draw(img)
 
 # Load font
 try:
-    font = ImageFont.truetype("DejaVuSans.ttf", 400)
+    font = ImageFont.truetype("DejaVuSans.ttf", 100)
 except IOError:
-    font = ImageFont.load_default(32)
+    font = ImageFont.load_default(20)
 
 # Center text
 bbox = draw.textbbox((0, 0), text, font=font)
 text_width, text_height = bbox[2] - bbox[0], bbox[3] - bbox[1]
 text_x = (width - text_width) / 2
 text_y = (height - text_height) / 2
-draw.text((text_x, text_y), text, fill='black', font=font, size=64)
+draw.text((text_x, text_y), text, fill='black', font=font, size=48)
 
 # Convert to NumPy array (OpenCV format is BGR)
 frame = np.array(img)

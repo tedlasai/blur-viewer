@@ -1,15 +1,43 @@
 import os
 import shutil
-
+import cv2
 # Input: mapping of group names to list of indices
+
+import subprocess
+
+# Base directory setup
+base_dir = "/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/webpage-sai/rearrange_assets/allwild"
+output_root = os.path.join(base_dir, "..")
+
+
+
+#downsample all videos in the megasam folder to 720p and store in megasam_ds/
+
+
+
+#downsample megasam at the beginning
+# group_megasam = os.path.join(base_dir, "megasam")
+# group_megasam_ds = os.path.join(base_dir,"megasam_ds")
+
+# print(f"Processing directory: {group_megasam}")
+# for root, _, files in os.walk(group_megasam):
+#     print(f"Processing directory: {root}")
+#     for file in files:
+#         if file.endswith(".mp4"):
+#             rel_path = os.path.relpath(os.path.join(root, file), group_megasam)
+#             output_path = os.path.join(group_megasam_ds, rel_path)
+#             input_path = os.path.join(root, file)
+#             downsample_video_to_720p(input_path, output_path, scale_factor = 0.5)
 
 
 limitations = [0, 2, 8]
 historical = [36, 39, 43, 42, 41, 27, 29, 30,33]
-all_scenes = [44, 12, 10, 3, 24, 40, 16, 21, 35, 28]
+special_scenes = [44, 12, 10, 24, 40, 16, 21, 35, 28]
+megasam_scenes = [36, 39, 43, 42, 41, 27, 29, 30, 44, 12, 10, 24, 40, 16, 21, 35]
+all_scenes = special_scenes.copy()
 # add any numbers between 0 and 46 that are not in limitations or historical to all_scenes
 for i in range(45):
-    if i not in limitations and i not in historical and i not in all_scenes:
+    if i not in limitations and i not in historical and i not in special_scenes:
         all_scenes.append(i)
 
 group_dict = {
@@ -18,9 +46,6 @@ group_dict = {
     "wild": all_scenes,
 }
 
-# Base directory setup
-base_dir = "/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/webpage-sai/rearrange_assets/allwild"
-output_root = os.path.join(base_dir, "..")
 
 # Helper to copy all subfolders from one index
 def copy_all_subfolders(src_root, dst_root):
@@ -47,13 +72,8 @@ for group_name, indices in group_dict.items():
         old_str = f"{old_idx:04d}"
         new_str = f"{new_idx:04d}"
 
-        # Blurry - pastfuture
-        src = os.path.join(base_dir, "blurry", f"{old_str}_pastfuture.png")
-        dst = os.path.join(group_out, "blurry", f"{new_str}_pastfuture.png")
-        shutil.copy(src, dst)
-
-        # Blurry - present
-        src = os.path.join(base_dir, "blurry", f"{old_str}_present.png")
+        # Blurry - present (only need present since pastfuture is not used)
+        src = os.path.join(base_dir, "blurry_ds", f"{old_str}_present.png")
         dst = os.path.join(group_out, "blurry", f"{new_str}_present.png")
         shutil.copy(src, dst)
 
@@ -76,9 +96,18 @@ for group_name, indices in group_dict.items():
 
 
         
-        src_megasam = os.path.join(base_dir, "megasam", old_str)
+        src_megasam = os.path.join(base_dir, "megasam_ds", old_str)
         dst_megasam = os.path.join(group_out, "megasam", new_str)
-        copy_all_subfolders(src_megasam, dst_megasam)
+        os.makedirs(dst_megasam, exist_ok=True)
 
-   
+        if old_idx in special_scenes or old_idx in historical:
+            print(f"Processing directory: {src_megasam}")
+            #copy_all_subfolders(os.path.join(src_megasam, "pastfuture"), os.path.join(dst_megasam, "pastfuture"))
+            os.makedirs(os.path.join(dst_megasam, "pastfuture"), exist_ok=True)
+            shutil.copy(os.path.join(src_megasam, "pastfuture", "Ours.mp4"), os.path.join(dst_megasam, "pastfuture", "Ours.mp4"))
+        else:
+            os.makedirs(os.path.join(dst_megasam, "pastfuture"), exist_ok=True)
+            shutil.copy("/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/webpage-sai/rearrange_assets/nomegasam.mp4", os.path.join(dst_megasam, "pastfuture/Ours.mp4"))
+            #shutil.copy("/Users/saitedla/Dropbox/Documents/School/UofT/MotionBlur/Paper/figures/webpage-sai/rearrange_assets/nomegasam.mp4", os.path.join(dst_megasam, "pastfuture/Ours.mp4"))
+
 print("All groups processed successfully.")

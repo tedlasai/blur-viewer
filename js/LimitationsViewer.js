@@ -100,7 +100,7 @@ class LimitationsViewer {
         this.base_im = scene_id;
         this.cur_frame = 0;
         if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_${this.method}.png`;
+            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_present.png`;
         }
         this.loadVideos();
         this.change_frame(0);

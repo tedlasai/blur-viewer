@@ -20,8 +20,10 @@ class BaistViewer {
         this.input_img = document.getElementById(`${this.prefix}-input`);
         this.mega_sam = document.getElementById(`${this.prefix}-megasam`);
         this.mega_sam_poses = document.getElementById(`${this.prefix}-megasam-poses`);
+        this.gt_recon = document.getElementById(`${this.prefix}-gt`);
+        this.gt_tracks = document.getElementById(`${this.prefix}-gt-tracks`);
 
-        this.video_elements = [this.ours_recon, this.ours_tracks, this.anim_recon, this.anim_tracks];
+        this.video_elements = [this.ours_recon, this.ours_tracks, this.anim_recon, this.anim_tracks, this.gt_recon, this.gt_tracks];
 
         this.initSceneSelector();
         this.initSliderSync();
@@ -111,6 +113,8 @@ class BaistViewer {
         const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
         const anim_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/anim.mp4`;
         const anim_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/anim.mp4`;
+        const gt_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/GT.mp4`;
+        const gt_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/GT.mp4`;
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
@@ -128,6 +132,13 @@ class BaistViewer {
         this.anim_tracks.load();
         this.anim_tracks.currentTime = 0;
 
+        this.gt_recon.src = gt_reconPath;
+        this.gt_recon.load();
+        this.gt_recon.currentTime = 0;
+
+        this.gt_tracks.src = gt_tracksPath;
+        this.gt_tracks.load();
+        this.gt_tracks.currentTime = 0;
     }
 
     toggle_play_pause() {

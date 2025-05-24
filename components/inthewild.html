@@ -7,7 +7,7 @@
       <h2 class="title">In-the-Wild Results</h2>
       <div class="content has-text-justified">
         <p class="content has-text-justified">
-          A paragraph describing the results. We show recovered videos from motion-blurred images. Should have scene selection and also option to select between different modes (past, present, future, etc.)
+          We showcase our method on a variety of in-the-wild scenes. Our model can both predict in the present (1st tab) and the past and future (2nd tab). These scenes are sourced from various cameras, settings, and blur types. We find our model is able to reconstruct videos from a wide range of scenes, including those with complex motion and occlusions. Below we visualize the results of our method along with MotionETR and Jin et al. for comparison. We also show the Motion Tracks of the predicted frames along with dynamic 3D reconstructions recovered by MegaSAM.  
         </p>
       </div>
         <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
@@ -21,18 +21,18 @@
           <button class="button is-info is-light" data-method="pastfuture" onclick="wild_viewer.set_method('pastfuture')">Past & Future Predictions</button>
         </div>
         <!-- <h3 class="subtitle">Video Reconstruction</h3> -->
-        <!-- Blurry image centered -->
+        <!-- Blurry Image centered -->
         <div class="has-text-centered" style="margin-bottom: 1em;">
           <img id="wild-input" src="assets/wild/blurry/0000_present.png" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
-          <h5 style="font-size: 0.9em; padding: 0.5em;"> <strong>blurry image  </strong></h5>
+          <h5 style="font-size: 0.9em; padding: 0.5em;"> <strong>Blurry Image  </strong></h5>
         </div>
   
         <table style="width: 100%; border-collapse: collapse; text-align: center;">
           <thead>
             <tr>
               <th></th> <!-- Empty corner cell -->
-              <th style="font-size: 0.9em; padding: 0.5em;">recovered video</th>
-              <th style="font-size: 0.9em; padding: 0.5em;">motion tracks</th>
+              <th style="font-size: 0.9em; padding: 0.5em;">Recovered Video</th>
+              <th style="font-size: 0.9em; padding: 0.5em;">Motion Tracks</th>
             </tr>
           </thead>
           <tbody>
@@ -114,7 +114,7 @@
           <thead>
             <tr>
               <th></th>
-              <th style="font-size: 0.9em; padding: 0.5em;">3D reconstruction</th>
+              <th style="font-size: 0.9em; padding: 0.5em;">3D reconstruction (from past, present, and future prediction)</th>
               <th></th>
             </tr>
           </thead>
@@ -122,7 +122,7 @@
             <tr>
               <th style="font-size: 0.9em; padding: 0.5em; text-align: center; vertical-align: middle;">MegaSAM on Ours</th>
               <td style="width: 70%;">
-                <video id="wild-megasam" src="assets/wild/megasam/0000/present/Ours.mp4" muted autoplay loop 
+                <video id="wild-megasam" src="assets/wild/megasam/0000/pastfuture/Ours.mp4" muted autoplay loop 
                        style="width: 95%; border-radius: 1em;"></video>
               </td>
               <td style="width: 30%; vertical-align: middle;">

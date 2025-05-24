@@ -112,7 +112,7 @@ class HistoricalViewer {
         const method = this.method;
         const ours_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
         const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
-        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/${method}/Ours.mp4`;
+        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam path is only for pastfuture
         // const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
         // const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
         // const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
@@ -216,7 +216,7 @@ class HistoricalViewer {
         this.method = name;
         this.loadVideos();
         if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${this.base_im}_${name}.png`;
+            this.input_img.src = `assets/${this.prefix}/blurry/${this.base_im}_present.png`;
         }
         document.querySelectorAll(`#${this.prefix}-method-toggle button`).forEach(btn => {
             btn.classList.toggle("is-info", btn.dataset.method === name);

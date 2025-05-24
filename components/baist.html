@@ -7,7 +7,7 @@
     <h2 class="title">B-AIST++ Results</h2>
     <div class="content has-text-justified">
       <p class="content has-text-justified">
-        A paragraph describing the results. We show recovered videos from motion-blurred images. Should have scene selection and also option to select between different modes (past, present, future, etc.)
+       We compare our method on the B-AIST++ dataset. We find our model is able to recover the dancer poses and motions more faithfully than Animation From Blur. Our model is able to handle the various occlusion and disocclusion changes that happen while the dancer is moving.
       </p>
     </div>
       <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
@@ -18,18 +18,18 @@
       <br/>
       <br/>
       <!-- <h3 class="subtitle">Video Reconstruction</h3> -->
-      <!-- Blurry image centered -->
+      <!-- Blurry Image centered -->
       <div class="has-text-centered" style="margin-bottom: 1em;">
         <img id="baist-input" src="assets/baist/blurry/0000_present.png" style="width: 20%; border-radius: 1em; margin-bottom: 0.75em" />
-          <h5 style="font-size: 0.9em; padding: 0.5em;"> <strong>blurry image  </strong></h5>
+          <h5 style="font-size: 0.9em; padding: 0.5em;"> <strong>Blurry Image  </strong></h5>
       </div>
 
       <table style="width: 100%; border-collapse: collapse; text-align: center;">
         <thead>
           <tr>
             <th></th> <!-- Empty corner cell -->
-            <th style="font-size: 0.9em; padding: 0.5em;">recovered video</th>
-            <th style="font-size: 0.9em; padding: 0.5em;">motion tracks</th>
+            <th style="font-size: 0.9em; padding: 0.5em;">Recovered Video</th>
+            <th style="font-size: 0.9em; padding: 0.5em;">Motion Tracks</th>
           </tr>
         </thead>
         <tbody>
@@ -52,6 +52,17 @@
             </td>
             <td>
               <video id="baist-anim-tracks" src="assets/baist/tracks/0000/present/anim.mp4" muted
+                     style="width: 50%; border-radius: 1em;;"></video>
+            </td>
+          </tr>
+           <tr class="hide-on-pastfuture">
+            <th style="font-size: 1em; padding: 0.5em; text-align: center; vertical-align: middle;">Ground Truth</th>
+            <td>
+              <video id="baist-gt" src="assets/baist/videos/0000/present/GT.mp4" muted 
+                     style="width: 50%; border-radius: 1em;;"></video>
+            </td>
+            <td>
+              <video id="baist-gt-tracks" src="assets/baist/tracks/0000/present/GT.mp4" muted
                      style="width: 50%; border-radius: 1em;;"></video>
             </td>
           </tr>

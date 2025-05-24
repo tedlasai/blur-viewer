@@ -2,7 +2,7 @@ class InTheWildViewer {
     constructor() {
         this.prefix = 'wild';
         this.max_idx = 16;
-        this.n_scenes = 34;
+        this.n_scenes = 33;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
@@ -99,7 +99,7 @@ class InTheWildViewer {
         this.base_im = scene_id;
         this.cur_frame = 0;
         if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_${this.method}.png`;
+            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_present.png`; //present and pastfuture are the same
         }
         this.loadVideos();
         this.change_frame(0);
@@ -116,7 +116,7 @@ class InTheWildViewer {
         const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
         const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
         const method_not_supported_path = `assets/extra_stuff/method_not_supported.mp4`;
-        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/${method}/Ours.mp4`;
+        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam is only available for pastfuture
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();

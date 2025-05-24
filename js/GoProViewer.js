@@ -19,11 +19,13 @@ class GoProViewer {
         this.motionetr_tracks = document.getElementById(`${this.prefix}-motionetr-tracks`);
         this.jin_recon = document.getElementById(`${this.prefix}-jin`);
         this.jin_tracks = document.getElementById(`${this.prefix}-jin-tracks`);
+        this.gt_recon = document.getElementById(`${this.prefix}-gt`);
+        this.gt_tracks = document.getElementById(`${this.prefix}-gt-tracks`);
         this.input_img = document.getElementById(`${this.prefix}-input`);
         this.mega_sam = document.getElementById(`${this.prefix}-megasam`);
         this.mega_sam_poses = document.getElementById(`${this.prefix}-megasam-poses`);
 
-        this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks];
+        this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks, this.gt_recon, this.gt_tracks];
 
         this.initSceneSelector();
         this.initSliderSync();
@@ -115,6 +117,8 @@ class GoProViewer {
         const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
         const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
         const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
+        const gt_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/GT.mp4`;
+        const gt_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/GT.mp4`;
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
@@ -139,6 +143,14 @@ class GoProViewer {
         this.jin_tracks.src = jin_tracksPath;
         this.jin_tracks.load();
         this.jin_tracks.currentTime = 0;
+
+        this.gt_recon.src = gt_reconPath;
+        this.gt_recon.load();
+        this.gt_recon.currentTime = 0;
+
+        this.gt_tracks.src = gt_tracksPath;
+        this.gt_tracks.load();
+        this.gt_tracks.currentTime = 0;
     }
 
     toggle_play_pause() {
