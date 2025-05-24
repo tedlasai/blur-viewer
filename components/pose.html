@@ -1,0 +1,37 @@
+<section class="hero teaser">
+  <div class="hero-body">
+        <div style='border-radius:1em;box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;padding:1em;' class="container is-max-desktop has-text-centered">
+
+    <div class="container is-max-desktop has-text-centered" style="border-radius:1em; box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; padding:1em;">
+      <h2 class="title">Recovering 3D Human Pose</h2>
+        <div class="content has-text-justified">
+      <p class="content has-text-justified">
+          We find our method can recover pose from a blurry image with human motion. From this blurred image, we are able to recover a video sequence of a man shaking his head. We visualize the recovered video sequence as well as the human head pose.
+      </p>
+    </div>
+      <table style="width: 100%; border-collapse: collapse; text-align: center; margin-top: 1.5em;">
+        <thead>
+          <tr>
+            <th></th>
+            <th style="font-size: 0.9em; padding: 0.5em;">Recovered Video</th>
+          </tr>
+        </thead>
+         <div class="has-text-centered" style="margin-bottom: 1em;">
+          <img id="simulated-input" src="assets/pose/BlurryFace1.png" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
+          <h5 style="font-size: 0.9em; padding: 0.5em;"> <strong>Blurry Image  </strong></h5>
+        </div>
+        <tbody>
+          <tr>
+            <th style="font-size: 1em; padding: 0.5em; text-align: center; vertical-align: middle;">Ours</th>
+        
+            <td>
+              <video id="pose-ours-tracks" src="assets/pose/blurr_face_tracking.mp4"
+                     style="width: 95%; border-radius: 1em;" controls></video>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    </div>
+  </div>
+</section>

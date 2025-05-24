@@ -33,7 +33,7 @@ output_root = os.path.join(base_dir, "..")
 limitations = [0, 2, 8]
 historical = [36, 39, 43, 42, 41, 27, 29, 30,33]
 special_scenes = [44, 12, 10, 24, 40, 16, 21, 35, 28]
-megasam_scenes = [36, 39, 43, 42, 41, 27, 29, 30, 44, 12, 10, 24, 40, 16, 21, 35]
+megasam_scenes = [36, 39, 43, 42, 41, 27, 29, 30, 33, 44, 12, 10, 24, 40, 16, 21, 35, 28]
 all_scenes = special_scenes.copy()
 # add any numbers between 0 and 46 that are not in limitations or historical to all_scenes
 for i in range(45):
