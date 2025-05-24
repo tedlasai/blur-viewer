@@ -2,7 +2,7 @@ class HistoricalViewer {
     constructor() {
         this.prefix = 'historical';
         this.max_idx = 16;
-        this.n_scenes = 11;
+        this.n_scenes = 9;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
@@ -112,6 +112,7 @@ class HistoricalViewer {
         const method = this.method;
         const ours_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
         const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
+        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/${method}/Ours.mp4`;
         // const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
         // const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
         // const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
@@ -124,6 +125,10 @@ class HistoricalViewer {
         this.ours_tracks.src = ours_tracksPath;
         this.ours_tracks.load();
         this.ours_tracks.currentTime = 0;
+
+        this.mega_sam.src = mega_sam_path;
+        this.mega_sam.load();
+        this.mega_sam.currentTime = 0;
 
     //     this.motionetr_recon.src = motionetr_reconPath;
     //     this.motionetr_recon.load();

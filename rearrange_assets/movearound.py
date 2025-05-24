@@ -6,8 +6,8 @@ import shutil
 
 limitations = [0, 2, 8]
 historical = [36, 39, 43, 42, 41, 27, 29, 30,33]
-all_scenes = [44, 12, 16, 10, 3, 24, 40, 21, 35, 28]
-# add any numbers between 0 and 45 that are not in limitations or historical to all_scenes
+all_scenes = [44, 12, 10, 3, 24, 40, 16, 21, 35, 28]
+# add any numbers between 0 and 46 that are not in limitations or historical to all_scenes
 for i in range(45):
     if i not in limitations and i not in historical and i not in all_scenes:
         all_scenes.append(i)
@@ -72,4 +72,13 @@ for group_name, indices in group_dict.items():
         dst_videos = os.path.join(group_out, "videos", new_str)
         copy_all_subfolders(src_videos, dst_videos)
 
+        fallback_mp4 = os.path.join(base_dir, "..", "megasam_not_converged.mp4")
+
+
+        
+        src_megasam = os.path.join(base_dir, "megasam", old_str)
+        dst_megasam = os.path.join(group_out, "megasam", new_str)
+        copy_all_subfolders(src_megasam, dst_megasam)
+
+   
 print("All groups processed successfully.")

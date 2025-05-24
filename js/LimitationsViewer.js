@@ -2,7 +2,7 @@ class LimitationsViewer {
     constructor() {
         this.prefix = 'limitations';
         this.max_idx = 16;
-        this.n_scenes = 45;
+        this.n_scenes = 3;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
@@ -20,8 +20,9 @@ class LimitationsViewer {
         this.jin_recon = document.getElementById(`${this.prefix}-jin`);
         this.jin_tracks = document.getElementById(`${this.prefix}-jin-tracks`);
         this.input_img = document.getElementById(`${this.prefix}-input`);
-        this.mega_sam = document.getElementById(`${this.prefix}-megasam`);
-        this.mega_sam_poses = document.getElementById(`${this.prefix}-megasam-poses`);
+        // this.mega_sam = document.getElementById(`${this.prefix}-megasam`);
+        // this.mega_sam_poses = document.getElementById(`${this.prefix}-megasam-poses`);
+        
 
         this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks];
 
@@ -116,6 +117,7 @@ class LimitationsViewer {
         const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
         const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
         const method_not_supported_path = `assets/extra_stuff/method_not_supported.mp4`;
+        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/${method}/Ours.mp4`;
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
@@ -124,6 +126,10 @@ class LimitationsViewer {
         this.ours_tracks.src = ours_tracksPath;
         this.ours_tracks.load();
         this.ours_tracks.currentTime = 0;
+
+        this.mega_sam.src = mega_sam_path;
+        this.mega_sam.load();
+        this.mega_sam.currentTime = 0;
         
         if (this.method === 'pastfuture') {
             this.motionetr_recon.src = method_not_supported_path;
