@@ -1,6 +1,6 @@
-class InTheWildViewer {
+class LimitationsViewer {
     constructor() {
-        this.prefix = 'wild';
+        this.prefix = 'limitations';
         this.max_idx = 16;
         this.n_scenes = 45;
         this.playback_speed = 0.2;

@@ -3,7 +3,7 @@ import numpy as np
 from PIL import Image, ImageDraw, ImageFont
 
 # Video parameters
-width, height = 640, 480
+width, height = 640, 360
 text = "         This method doesn't  \n support future/past prediction."
 num_frames = 16
 output_path = "assets/extra_stuff/method_not_supported.mp4"

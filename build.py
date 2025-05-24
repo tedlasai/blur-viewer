@@ -12,4 +12,5 @@ with open("index.html", "w") as out:
     out.write(inline("components/simulated.html"))
     out.write(inline("components/gopro.html"))
     out.write(inline("components/baist.html"))
+    out.write(inline("components/limitations.html"))
     out.write(inline("components/ending.html"))

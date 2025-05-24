@@ -11,5 +11,6 @@ document.addEventListener("DOMContentLoaded", () => {
 	historical_viewer = new HistoricalViewer();
 	gopro_viewer = new GoProViewer();
 	baist_viwer = new BaistViewer();
+	limitations_viewer = new LimitationsViewer();
 });
 
