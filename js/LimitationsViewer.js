@@ -81,7 +81,7 @@ class LimitationsViewer {
         });
     }
     /* Update frame on slider  */
-    _frame(idx) {
+    change_frame(idx) {
         //this.stop_anim();
         this.cur_frame = parseInt(idx);
         const norm = this.cur_frame / (this.max_idx);
@@ -208,7 +208,7 @@ class LimitationsViewer {
     next_frame() {
         if (this.cur_frame >= this.max_idx) this.anim_dir = -1;
         if (this.cur_frame === 0) this.anim_dir = 1;
-        this._frame(this.cur_frame + this.anim_dir);
+        this.change_frame(this.cur_frame + this.anim_dir);
     }
     cycle_frames(delay = 200) {
         this.interval_id = setInterval(() => this.next_frame(), delay);
@@ -247,6 +247,6 @@ class LimitationsViewer {
             const el = document.getElementById(`${this.prefix}-legend-${region}`);
             if (el) el.style.display = name === "pastfuture" ? "inline-flex" : "none";
         });
-        this._frame(this.cur_frame);
+        this.change_frame(this.cur_frame);
     }
 }
