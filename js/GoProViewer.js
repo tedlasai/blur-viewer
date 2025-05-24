@@ -29,7 +29,7 @@ class GoProViewer {
 
         this.initSceneSelector();
         this.initSliderSync();
-        this.isPlaying = false;
+        this.isPlaying = true;
         this.toggle_play_pause();
 
 

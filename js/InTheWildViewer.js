@@ -2,7 +2,7 @@ class InTheWildViewer {
     constructor() {
         this.prefix = 'wild';
         this.max_idx = 16;
-        this.n_scenes = 33;
+        this.n_scenes = 32;
         this.playback_speed = 0.2;
 
         this.num_videos = 6;
@@ -27,7 +27,7 @@ class InTheWildViewer {
 
         this.initSceneSelector();
         this.initSliderSync();
-        this.isPlaying = false;
+        this.isPlaying = true;
         this.toggle_play_pause();
 
 

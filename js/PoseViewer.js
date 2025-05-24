@@ -26,38 +26,38 @@ class PoseViewer {
 
         this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks];
 
-        this.initSceneSelector();
+        //this.initSceneSelector();
         this.initSliderSync();
-        this.isPlaying = false;
-        this.toggle_play_pause();
+        this.isPlaying = true;
+        //this.toggle_play_pause();
 
 
         //this.initialize_slider_sync();
     }
 
     /* Scene selector from SimulatedViewer */
-    initSceneSelector() {
-        const selector = document.getElementById(`${this.prefix}-scene-selector`);
-        selector.innerHTML = ""; // Clear any previous content
+    // initSceneSelector() {
+    //     const selector = document.getElementById(`${this.prefix}-scene-selector`);
+    //     selector.innerHTML = ""; // Clear any previous content
     
-        for (let i = 0; i < this.n_scenes; i++) {
-            const padded = i.toString().padStart(4, '0');
+    //     for (let i = 0; i < this.n_scenes; i++) {
+    //         const padded = i.toString().padStart(4, '0');
             
-            const div = document.createElement("div");
-            div.style.margin = "0.5em";
+    //         const div = document.createElement("div");
+    //         div.style.margin = "0.5em";
     
-            const img = document.createElement("img");
-            img.src = `assets/${this.prefix}/icons/${padded}.png`;
-            img.style.borderRadius = "1em";
-            img.style.maxWidth = "7em";
-            img.style.cursor = "pointer";
+    //         const img = document.createElement("img");
+    //         img.src = `assets/${this.prefix}/icons/${padded}.png`;
+    //         img.style.borderRadius = "1em";
+    //         img.style.maxWidth = "7em";
+    //         img.style.cursor = "pointer";
     
-            img.onclick = () => this.change_scene(padded);
+    //         img.onclick = () => this.change_scene(padded);
     
-            div.appendChild(img);
-            selector.appendChild(div);
-        }
-    }
+    //         div.appendChild(img);
+    //         selector.appendChild(div);
+    //     }
+    // }
 
 
 
@@ -165,39 +165,39 @@ class PoseViewer {
         }
     }
 
-    toggle_play_pause() {
-        this.isPlaying = !this.isPlaying;
+    // toggle_play_pause() {
+    //     this.isPlaying = !this.isPlaying;
 
-        //this.change_frame(this.cur_frame+1);
-        if (! this.isPlaying) {
-            // stop advancing the slider
-            this.stop_anim();
-        } else {
-            // start cycling the slider frames
-            // interpret playback_speed as seconds per frame
-            const delayMs = 100;
-            this.cycle_frames(delayMs);
-        }
+    //     //this.change_frame(this.cur_frame+1);
+    //     if (! this.isPlaying) {
+    //         // stop advancing the slider
+    //         this.stop_anim();
+    //     } else {
+    //         // start cycling the slider frames
+    //         // interpret playback_speed as seconds per frame
+    //         const delayMs = 100;
+    //         this.cycle_frames(delayMs);
+    //     }
     
 
 
-        // flip the play/pause button state
-        this.updatePlayButton();
-    }
+    //     // flip the play/pause button state
+    //     this.updatePlayButton();
+    // }
 
     /* Update UI play button */
-    updatePlayButton() {
-        const btn = document.getElementById(`${this.prefix}-play-pause-btn`);
-        const icon = document.getElementById(`${this.prefix}-play-pause-icon`);
-        const label = btn.querySelector("span:last-child");
-        if (this.isPlaying) { //show pause button while playing
-            icon.className = "fas fa-pause";
-            label.textContent = "Pause";
-        } else {
-            icon.className = "fas fa-play";
-            label.textContent = "Play";
-        }
-    }
+    // updatePlayButton() {
+    //     const btn = document.getElementById(`${this.prefix}-play-pause-btn`);
+    //     const icon = document.getElementById(`${this.prefix}-play-pause-icon`);
+    //     const label = btn.querySelector("span:last-child");
+    //     if (this.isPlaying) { //show pause button while playing
+    //         icon.className = "fas fa-pause";
+    //         label.textContent = "Pause";
+    //     } else {
+    //         icon.className = "fas fa-play";
+    //         label.textContent = "Play";
+    //     }
+    // }
 
 
     /* Animation controls */

@@ -27,7 +27,7 @@ class HistoricalViewer {
 
         this.initSceneSelector();
         this.initSliderSync();
-        this.isPlaying = false;
+        this.isPlaying = true;
         this.toggle_play_pause();
         this.set_method(this.method);
 
