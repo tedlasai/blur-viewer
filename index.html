@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="./static/css/index.css">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css">
 
+  <script>
+  console.log("✅ JavaScript is running.");
+</script>
 
   <style media = "all">
     body {
@@ -38,20 +41,19 @@
         width:100%;
     }
   </style>
-
+</head>
 <body>
 
-  <script src="js/SimulatedViewer.js"></script>
+  <script src="js/main.js"></script>
+<script src="js/SimulatedViewer.js"></script>
 <script src="js/InTheWildViewer.js"></script>
 <script src="js/HistoricalViewer.js"></script>
 <script src="js/GoProViewer.js"></script>
 <script src="js/BaistViewer.js"></script>
 <script src="js/LimitationsViewer.js"></script>
 <script src="js/PoseViewer.js"></script>
-<script src="js/main.js"></script>
+<script src="js/ResControl.js"></script>
 
-
-</head>
 
 
 <section class="hero">
@@ -62,7 +64,7 @@
             <h1 style="font: 1em;" class="title is-1 publication-title text-muted" >
               Generating the Past, Present and Future from a Motion-Blurred Image
             </h1>
-            <div class="is-size-5 publication-authors">
+            <!-- <div class="is-size-5 publication-authors">
               <span class="author-block">Anonymous Author(s)</span>
             </div>
             <div class="is-size-5 publication-authors">
@@ -70,7 +72,7 @@
             </div>
             <div class="is-size-5 publication-authors">
               <span class="author-block">SIGGRAPH Asia 2025</span>
-            </div>
+            </div> -->
 
             <div>
   <span class="author-block">
@@ -90,7 +92,10 @@
     </div>
   </section>
   <br/>
-
+ <div id="res-toggle" class="buttons is-centered">
+          <button class="button is-info is-light" data-method="fullres" onclick="res_control.setResolution('full')">Full Resolution</button>
+          <button class="button is-info" data-method="halfres" onclick="res_control.setResolution('half')">Half Resolution</button>
+  </div>
 
 <section class="hero teaser">
     <div class="hero-body">
@@ -115,7 +120,7 @@
         <!-- <h3 class="subtitle">Video Reconstruction</h3> -->
         <!-- Blurry Image centered -->
         <div class="has-text-centered" style="margin-bottom: 1em;">
-          <img id="wild-input" src="assets/wild/blurry/0000_present.png" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
+          <img id="wild-input" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
           <h5 style="font-size: 1.5em;  padding: 0.5em;"> <strong>Blurry Image  </strong></h5>
         </div>
   
@@ -131,33 +136,33 @@
             <tr>
               <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">Ours</th>
               <td>
-                <video id="wild-ours" src="assets/wild/videos/0000/present/Ours.mp4" muted 
+                <video id="wild-ours" muted 
                        style="width: 95%; border-radius: 1em;"></video>
               </td>
               <td>
-                <video id="wild-ours-tracks" src="assets/wild/tracks/0000/present/Ours.mp4" muted
+                <video id="wild-ours-tracks" muted
                        style="width: 95%; border-radius: 1em;"></video>
               </td>
             </tr>
             <tr class="hide-on-pastfuture">
               <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">MotionETR</th>
               <td>
-                <video id="wild-motionetr" src="assets/wild/videos/0000/present/MotionETR.mp4" muted 
+                <video id="wild-motionetr" muted 
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
               <td>
-                <video id="wild-motionetr-tracks" src="assets/wild/tracks/0000/present/MotionETR.mp4" muted
+                <video id="wild-motionetr-tracks" muted
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
             </tr>
             <tr class="hide-on-pastfuture">
               <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">Jin et al.</th>
               <td>
-                <video id="wild-jin" src="assets/wild/videos/0000/present/Jin.mp4" muted 
+                <video id="wild-jin" muted 
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
               <td>
-                <video id="wild-jin-tracks" src="assets/wild/tracks/0000/present/Jin.mp4" muted 
+                <video id="wild-jin-tracks" muted 
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
             </tr>
@@ -214,12 +219,12 @@
             <tr>
               <th style="font-size: 1.5em;  padding: 0.5em; text-align: center; vertical-align: middle;">MegaSAM on Ours</th>
               <td style="width: 70%;">
-                <video id="wild-megasam" src="assets/wild/megasam/0000/pastfuture/Ours.mp4" muted autoplay loop 
+                <video id="wild-megasam"  muted autoplay loop 
                        style="width: 95%; border-radius: 1em;"></video>
               </td>
               <td style="width: 30%; vertical-align: middle;">
                 <div style="font-size: 1.5em;  font-weight: bold; margin-bottom: 0.5em;">camera poses</div>
-                <video id="wild-megasam-poses" src="assets/wild/megasam_poses/0000/pastfuture/Ours.mp4" muted autoplay loop
+                <video id="wild-megasam-poses"  muted autoplay loop
                 style="width: 95%; border-radius: 1em;"></video>
               </td>
             </tr>
@@ -256,7 +261,7 @@
       <!-- <h3 class="subtitle">Video Reconstruction</h3> -->
       <!-- Blurry Image centered -->
       <div class="has-text-centered" style="margin-bottom: 1em;">
-        <img id="historical-input" src="assets/historical/blurry/0000_present.png" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
+        <img id="historical-input"  style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
         <h5 style="font-size: 1.5em;  padding: 0.5em;"> <strong>Blurry Image  </strong></h5>
       </div>
 
@@ -272,33 +277,33 @@
           <tr>
             <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">Ours</th>
             <td>
-              <video id="historical-ours" src="assets/historical/videos/0000/present/Ours.mp4" muted 
+              <video id="historical-ours"  muted 
                      style="width: 95%; border-radius: 1em;"></video>
             </td>
             <td>
-              <video id="historical-ours-tracks" src="assets/historical/tracks/0000/present/Ours.mp4" muted
+              <video id="historical-ours-tracks"  muted
                      style="width: 95%; border-radius: 1em;"></video>
             </td>
           </tr>
           <!-- <tr class="hide-on-pastfuture">
             <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">MotionETR</th>
             <td>
-              <video id="historical-motionetr" src="assets/historical/videos/0000/present/MotionETR.mp4" muted 
+              <video id="historical-motionetr"  muted 
                      style="width: 95%; border-radius: 1em;;"></video>
             </td>
             <td>
-              <video id="historical-motionetr-tracks" src="assets/historical/tracks/0000/present/MotionETR.mp4" muted
+              <video id="historical-motionetr-tracks"  muted
                      style="width: 95%; border-radius: 1em;;"></video>
             </td>
           </tr>
           <tr class="hide-on-pastfuture">
             <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">Jin et al.</th>
             <td>
-              <video id="historical-jin" src="assets/historical/videos/0000/present/Jin.mp4" muted 
+              <video id="historical-jin"  muted 
                      style="width: 95%; border-radius: 1em;;"></video>
             </td>
             <td>
-              <video id="historical-jin-tracks" src="assets/historical/tracks/0000/present/Jin.mp4" muted 
+              <video id="historical-jin-tracks"  muted 
                      style="width: 95%; border-radius: 1em;;"></video>
             </td>
           </tr> -->
@@ -355,12 +360,12 @@
           <tr>
             <th style="font-size: 1.5em;  padding: 0.5em; text-align: center; vertical-align: middle;">MegaSAM on Ours</th>
             <td style="width: 70%;">
-              <video id="historical-megasam" src="assets/historical/megasam/0000/pastfuture/Ours.mp4" muted autoplay loop 
+              <video id="historical-megasam"  muted autoplay loop 
                      style="width: 95%; border-radius: 1em;"></video>
             </td>
             <td style="width: 30%; vertical-align: middle;">
               <div style="font-size: 1.5em;  font-weight: bold; margin-bottom: 0.5em;">camera poses</div>
-              <video id="historical-megasam-poses" src="assets/historical/megasam_poses/0000/pastfuture/Ours.mp4" muted autoplay loop
+              <video id="historical-megasam-poses" muted autoplay loop
               style="width: 95%; border-radius: 1em;"></video>
             </td>
           </tr>
@@ -407,7 +412,7 @@
     <!-- Pose Estimation Video -->
     <tr>
       <td style="width: 70%;">
-        <video id="pose-reconstructed-video-2" src="assets/pose/blurr_face_tracking_crop.mp4" muted autoplay loop 
+        <video id="pose-reconstructed-video-2" src="assets/pose/blurr_face_tracking_crop.mp4" muted autoplay loop playsinline
                style="width: 95%; border-radius: 1em;"></video>
       </td>
     </tr>
@@ -828,7 +833,7 @@
         <!-- <h3 class="subtitle">Video Reconstruction</h3> -->
         <!-- Blurry Image centered -->
         <div class="has-text-centered" style="margin-bottom: 1em;">
-          <img id="limitations-input" src="assets/limitations/blurry/0000_present.png" style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
+          <img id="limitations-input"  style="width: 40%; border-radius: 1em; margin-bottom: 0.75em" />
           <h5 style="font-size: 1.5em;  padding: 0.5em;"> <strong>Blurry Image  </strong></h5>
         </div>
   
@@ -844,33 +849,33 @@
             <tr>
               <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">Ours</th>
               <td>
-                <video id="limitations-ours" src="assets/limitations/videos/0000/present/Ours.mp4" muted 
+                <video id="limitations-ours"  muted 
                        style="width: 95%; border-radius: 1em;"></video>
               </td>
               <td>
-                <video id="limitations-ours-tracks" src="assets/limitations/tracks/0000/present/Ours.mp4" muted
+                <video id="limitations-ours-tracks"  muted
                        style="width: 95%; border-radius: 1em;"></video>
               </td>
             </tr>
             <tr class="hide-on-pastfuture">
               <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">MotionETR</th>
               <td>
-                <video id="limitations-motionetr" src="assets/limitations/videos/0000/present/MotionETR.mp4" muted 
+                <video id="limitations-motionetr"  muted 
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
               <td>
-                <video id="limitations-motionetr-tracks" src="assets/limitations/tracks/0000/present/MotionETR.mp4" muted
+                <video id="limitations-motionetr-tracks"  muted
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
             </tr>
             <tr class="hide-on-pastfuture">
               <th style="font-size: 1.5em; padding: 0.5em; text-align: center; vertical-align: middle;">Jin et al.</th>
               <td>
-                <video id="limitations-jin" src="assets/limitations/videos/0000/present/Jin.mp4" muted 
+                <video id="limitations-jin"  muted 
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
               <td>
-                <video id="limitations-jin-tracks" src="assets/limitations/tracks/0000/present/Jin.mp4" muted 
+                <video id="limitations-jin-tracks"  muted 
                        style="width: 95%; border-radius: 1em;;"></video>
               </td>
             </tr>
@@ -927,12 +932,12 @@
             <tr>
               <th style="font-size: 1.5em;  padding: 0.5em; text-align: center; vertical-align: middle;">MegaSAM on Ours</th>
               <td style="width: 70%;">
-                <video id="limitations-megasam" src="assets/limitations/videos/cam_motion.mp4" muted autoplay loop 
+                <video id="limitations-megasam"  muted autoplay loop 
                        style="width: 95%; border-radius: 1em;"></video>
               </td>
               <td style="width: 30%; vertical-align: middle;">
                 <div style="font-size: 1.5em;  font-weight: bold; margin-bottom: 0.5em;">camera poses</div>
-                <video id="limitations-megasam-poses" src="assets/limitations/videos/poses.mp4" muted autoplay loop
+                <video id="limitations-megasam-poses"  muted autoplay loop
                 style="width: 95%; border-radius: 1em;"></video>
               </td>
             </tr>

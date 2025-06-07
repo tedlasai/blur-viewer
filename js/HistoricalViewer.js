@@ -12,6 +12,8 @@ class HistoricalViewer {
         this.method = 'pastfuture';
         this.interval_id = null;
         this.anim_dir = 1;
+        this.assets_path = `ds_assets`;
+
 
         this.ours_recon = document.getElementById(`${this.prefix}-ours`);
         this.ours_tracks = document.getElementById(`${this.prefix}-ours-tracks`);
@@ -31,6 +33,8 @@ class HistoricalViewer {
         this.toggle_play_pause();
         this.set_method(this.method);
 
+        this.change_scene(this.base_im);  // triggers loadVideos with the default scene
+
 
         //this.initialize_slider_sync();
     }
@@ -47,7 +51,7 @@ class HistoricalViewer {
             div.style.margin = "0.5em";
     
             const img = document.createElement("img");
-            img.src = `assets/${this.prefix}/icons/${padded}.png`;
+            img.src = `${this.assets_path}/${this.prefix}/icons/${padded}.png`;
             img.style.borderRadius = "1em";
             img.style.maxWidth = "7em";
             img.style.cursor = "pointer";
@@ -80,27 +84,46 @@ class HistoricalViewer {
             });
         });
     }
+
+    setResolution(resolution) {
+        this.ds = resolution === "half";
+        this.assets_path = this.ds ? `ds_assets` : `assets`;
+        this.change_scene(this.base_im);  // reload videos with new resolution
+    }
+
     /* Update frame on slider change */
     change_frame(idx) {
-        //this.stop_anim();
-        this.cur_frame = parseInt(idx);
-        const norm = this.cur_frame / (this.max_idx);
-        this.video_elements.forEach(video => {
-            if (video && video.duration) {
+    this.cur_frame = parseInt(idx);
+    const norm = this.cur_frame / this.max_idx;
+
+    this.video_elements.forEach(video => {
+        if (!video) return;
+
+        const seekToTime = () => {
+            if (video.duration) {
+                console.log(`Seeking ${video.src} to ${norm * video.duration}`);
                 video.currentTime = norm * video.duration;
-
+                video.removeEventListener('canplay', seekToTime); // Clean up
             }
+        };
 
-        });
-        this.applyGlowEffect();
-    }
+        // Safari won't allow currentTime setting before readyState >= 2
+        if (video.readyState >= 2 && video.duration) {
+            video.currentTime = norm * video.duration;
+        } else {
+            video.addEventListener('canplay', seekToTime);
+        }
+    });
+
+    this.applyGlowEffect();
+}
 
     /* Scene change handler */
     change_scene(scene_id) {
         this.base_im = scene_id;
         this.cur_frame = 0;
         if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_present.png`;//blurry image is the same for present and pastfuture
+            this.input_img.src = `${this.assets_path}/${this.prefix}/blurry/${scene_id}_present.png`;//blurry image is the same for present and pastfuture
         }
         this.loadVideos();
         this.change_frame(0);
@@ -108,16 +131,17 @@ class HistoricalViewer {
 
     /* Load video sources */
     loadVideos() {
+        console.log("Loading videos for scene: " + this.base_im);
         const scene = this.base_im;
         const method = this.method;
-        const ours_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
-        const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
-        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam path is only for pastfuture
-        const mega_sam_poses_path = `assets/${this.prefix}/megasam_poses/${scene}/pastfuture/Ours.mp4`; // mega sam path is only for pastfuture
-        // const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
-        // const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
-        // const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
-        // const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
+        const ours_reconPath = `${this.assets_path}/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
+        const ours_tracksPath = `${this.assets_path}/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
+        const mega_sam_path = `${this.assets_path}/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam path is only for pastfuture
+        const mega_sam_poses_path = `${this.assets_path}/${this.prefix}/megasam_poses/${scene}/pastfuture/Ours.mp4`; // mega sam path is only for pastfuture
+        // const motionetr_reconPath = `${this.assets_path}/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
+        // const motionetr_tracksPath = `${this.assets_path}/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
+        // const jin_reconPath = `${this.assets_path}/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
+        // const jin_tracksPath = `${this.assets_path}/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
 
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();

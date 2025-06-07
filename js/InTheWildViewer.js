@@ -12,6 +12,8 @@ class InTheWildViewer {
         this.method = 'present';
         this.interval_id = null;
         this.anim_dir = 1;
+        this.ds = true;
+        this.assets_path = `ds_assets`;
 
         this.ours_recon = document.getElementById(`${this.prefix}-ours`);
         this.ours_tracks = document.getElementById(`${this.prefix}-ours-tracks`);
@@ -25,13 +27,11 @@ class InTheWildViewer {
 
         this.video_elements = [this.ours_recon, this.ours_tracks, this.motionetr_recon, this.motionetr_tracks, this.jin_recon, this.jin_tracks];
 
+        this.change_scene(this.base_im);  // triggers loadVideos with the default scene
         this.initSceneSelector();
         this.initSliderSync();
         this.isPlaying = true;
         this.toggle_play_pause();
-
-
-        //this.initialize_slider_sync();
     }
 
     /* Scene selector from SimulatedViewer */
@@ -46,7 +46,7 @@ class InTheWildViewer {
             div.style.margin = "0.5em";
     
             const img = document.createElement("img");
-            img.src = `assets/${this.prefix}/icons/${padded}.png`;
+            img.src = `${this.assets_path}/${this.prefix}/icons/${padded}.png`;
             img.style.borderRadius = "1em";
             img.style.maxWidth = "7em";
             img.style.cursor = "pointer";
@@ -99,25 +99,32 @@ class InTheWildViewer {
         this.base_im = scene_id;
         this.cur_frame = 0;
         if (this.input_img) {
-            this.input_img.src = `assets/${this.prefix}/blurry/${scene_id}_present.png`; //present and pastfuture are the same
+            this.input_img.src = `${this.assets_path}/${this.prefix}/blurry/${scene_id}_present.png`; //present and pastfuture are the same
         }
         this.loadVideos();
         this.change_frame(0);
+    }
+
+    setResolution(resolution) {
+        console.log(`Setting resolution to: ${resolution}`);
+        this.ds = resolution === "half";
+        this.assets_path = this.ds ? `ds_assets` : `assets`;
+        this.change_scene(this.base_im);  // reload videos with new resolution
     }
 
     /* Load video sources */
     loadVideos() {
         const scene = this.base_im;
         const method = this.method;
-        const ours_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
-        const ours_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
-        const motionetr_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
-        const motionetr_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
-        const jin_reconPath = `assets/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
-        const jin_tracksPath = `assets/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
-        const method_not_supported_path = `assets/extra_stuff/method_not_supported.mp4`;
-        const mega_sam_path = `assets/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam is only available for pastfuture
-        const mega_sam_poses_path = `assets/${this.prefix}/megasam_poses/${scene}/pastfuture/Ours.mp4`; // mega sam poses is only available for pastfuture
+        const ours_reconPath = `${this.assets_path}/${this.prefix}/videos/${scene}/${method}/Ours.mp4`;
+        const ours_tracksPath = `${this.assets_path}/${this.prefix}/tracks/${scene}/${method}/Ours.mp4`;
+        const motionetr_reconPath = `${this.assets_path}/${this.prefix}/videos/${scene}/${method}/MotionETR.mp4`;
+        const motionetr_tracksPath = `${this.assets_path}/${this.prefix}/tracks/${scene}/${method}/MotionETR.mp4`;
+        const jin_reconPath = `${this.assets_path}/${this.prefix}/videos/${scene}/${method}/Jin.mp4`;
+        const jin_tracksPath = `${this.assets_path}/${this.prefix}/tracks/${scene}/${method}/Jin.mp4`;
+        const method_not_supported_path = `${this.assets_path}/extra_stuff/method_not_supported.mp4`;
+        const mega_sam_path = `${this.assets_path}/${this.prefix}/megasam/${scene}/pastfuture/Ours.mp4`; // mega sam is only available for pastfuture
+        const mega_sam_poses_path = `${this.assets_path}/${this.prefix}/megasam_poses/${scene}/pastfuture/Ours.mp4`; // mega sam poses is only available for pastfuture
         this.ours_recon.src = ours_reconPath;
         this.ours_recon.load();
         this.ours_recon.currentTime = 0;
